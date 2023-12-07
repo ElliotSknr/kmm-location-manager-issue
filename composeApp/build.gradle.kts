@@ -18,12 +18,14 @@ kotlin {
     /**
      * Disables garbage collection; with the below five lines uncommented,
      * the location updates do not stop prematurely.
+     *
+     * TODO: Uncomment
      */
-    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class).all {
-        binaries.all {
-            freeCompilerArgs += "-Xgc=noop"
-        }
-    }
+//    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class).all {
+//        binaries.all {
+//            freeCompilerArgs += "-Xgc=noop"
+//        }
+//    }
     /* Stop Uncommenting */
 
     listOf(
