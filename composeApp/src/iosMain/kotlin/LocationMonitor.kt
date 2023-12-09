@@ -27,16 +27,18 @@ actual class LocationMonitor {
         /*Other override methods here are also not called e.g. didFailWithError*/
     }
 
-    init {
-        _clLocationManager.delegate = LocationDelegate(
-            onLocationCallback = { location ->
-                val newLocation = location?.let {
-                    it.coordinate.useContents { Location(latitude, longitude, it.timestamp.timeIntervalSince1970.toLong()) }
-                }
-                NSLog("Got a new location value: $newLocation")
-                _location.value = newLocation
+    private val locationDelegate = LocationDelegate(
+        onLocationCallback = { location ->
+            val newLocation = location?.let {
+                it.coordinate.useContents { Location(latitude, longitude, it.timestamp.timeIntervalSince1970.toLong()) }
             }
-        )
+            NSLog("Got a new location value: $newLocation")
+            _location.value = newLocation
+        }
+    )
+
+    init {
+        _clLocationManager.delegate = locationDelegate
         _clLocationManager.requestWhenInUseAuthorization()
         _clLocationManager.pausesLocationUpdatesAutomatically = false
         _clLocationManager.distanceFilter = kCLDistanceFilterNone
